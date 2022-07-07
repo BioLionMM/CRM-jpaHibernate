@@ -1,38 +1,52 @@
 package org.example.entity;
 
+import org.example.util.Gender;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name="client")
+@Table(name = "customers")
 public class Customer {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String address;
     private String city;
-    private String country;
-    @Column(name="company-name")
+    @Column(name="company_name")
     private String companyName;
+    private String country;
+    private String email;
+    @Column(name="first_name")
     private String firstName;
+    @Column(name="last_name")
     private String lastName;
     private String phone;
-    private int state;
+    @Column(name="zip_code")
+    private String zipCode;
+    private Integer state;
+    private Gender gender; // 0:MALE / 1:FEMALE / 2:OTHER
 
-    public Customer(){};
 
-    public Customer(String prenom){
-        this.firstName=prenom;
+
+    @OneToOne
+    @JoinColumn(name="payment_id")
+    private Payment payment; // numéro de Carte bleu
+
+    @ManyToOne
+    @JoinColumn(name="delivery_address_id")
+    private Address deliveryAddress; // 1 seule adresse par Customer
+
+    @ManyToMany
+    private List<Product> products = new ArrayList<>();
+
+    public Customer(){
     }
-    public Customer(Long id, String address, String city, String country, String companyName, String firstName, String lastName, String phone, int state) {
-        this.id = id;
-        this.address = address;
-        this.city = city;
-        this.country = country;
-        this.companyName = companyName;
+    public Customer(String firstName){
         this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.state = state;
     }
 
     public Long getId() {
@@ -59,6 +73,14 @@ public class Customer {
         this.city = city;
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
     public String getCountry() {
         return country;
     }
@@ -67,12 +89,12 @@ public class Customer {
         this.country = country;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getFirstName() {
@@ -99,11 +121,114 @@ public class Customer {
         this.phone = phone;
     }
 
-    public int getState() {
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public Integer getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(Integer state) {
         this.state = state;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public void addProduct(Product product){
+        this.products.add(product);
+    }
+
+    public Address getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(Address deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setNotNullData(Customer newCustomerData){
+        if(newCustomerData.getFirstName() != null) {
+            this.setFirstName(newCustomerData.getFirstName());
+        }
+
+        if(newCustomerData.getLastName() != null) {
+            this.setLastName(newCustomerData.getLastName());
+        }
+
+        if(newCustomerData.getAddress() != null) {
+            this.setAddress(newCustomerData.getAddress());
+        }
+
+        if(newCustomerData.getCity() != null) {
+            this.setCity(newCustomerData.getCity());
+        }
+
+        if(newCustomerData.getCountry() != null) {
+            this.setCountry(newCustomerData.getCountry());
+        }
+
+        if(newCustomerData.getCompanyName() != null) {
+            this.setCompanyName(newCustomerData.getCompanyName());
+        }
+
+        if(newCustomerData.getPhone() != null) {
+            this.setPhone(newCustomerData.getPhone());
+        }
+
+        if(newCustomerData.getZipCode() != null) {
+            this.setZipCode(newCustomerData.getZipCode());
+        }
+
+        if(newCustomerData.getEmail() != null) {
+            this.setEmail(newCustomerData.getEmail());
+        }
+
+        if(newCustomerData.getState() != null) {
+            this.setState(newCustomerData.getState());
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", country='" + country + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", state=" + state +
+                '}';
     }
 }
