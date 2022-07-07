@@ -1,11 +1,9 @@
 package org.example.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name="client")
 public class Customer {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -13,6 +11,7 @@ public class Customer {
     private String address;
     private String city;
     private String country;
+    @Column(name="company-name")
     private String companyName;
     private String firstName;
     private String lastName;
@@ -21,6 +20,9 @@ public class Customer {
 
     public Customer(){};
 
+    public Customer(String prenom){
+        this.firstName=prenom;
+    }
     public Customer(Long id, String address, String city, String country, String companyName, String firstName, String lastName, String phone, int state) {
         this.id = id;
         this.address = address;

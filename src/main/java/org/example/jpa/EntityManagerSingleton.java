@@ -10,7 +10,7 @@ public class EntityManagerSingleton {
     public static EntityManager getEntityManager() {
 
         if(entityManager == null) {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("crm");
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpacrm");
             entityManager = emf.createEntityManager();
         }
 

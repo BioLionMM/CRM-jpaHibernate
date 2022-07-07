@@ -3,9 +3,10 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
              version="2.2">
-    <persistence-unit name="crm">
+    <persistence-unit name="jpacrm">
         <properties>
             <!-- database connection -->
+            <property name="hibernate.hbm2ddl.auto" value="create" />
             <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver" />
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/jpacrm" />
             <property name="hibernate.connection.user" value="root" />
